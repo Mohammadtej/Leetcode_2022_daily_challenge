@@ -12,6 +12,7 @@ public:
         int ans = INT_MIN;
         for(int i=l; i<=r; i++)
         {
+            // last burst the ith ballon and then call for the rest
             int tp = (v[l-1] * v[i] * v[r+1]) + rec(v, l, i-1) + rec(v, i+1, r);
             ans = max(tp, ans);
         }
