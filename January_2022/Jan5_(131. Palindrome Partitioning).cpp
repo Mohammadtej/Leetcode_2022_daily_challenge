@@ -2,16 +2,16 @@ class Solution {
 public:
     vector<vector<string>> ans;
     vector<string> res;
-
-    void rec(string &s, int st)
+    int dp[20];
+    bool rec(string &s, int st)
     {
         if(st == s.size())
         {
             ans.push_back(res);
-            return;
+            return 1;
         }
         
-        bool check;
+        bool check, flag = false;
         
         for(int j=st; j<s.size(); j++)
         {
@@ -31,15 +31,18 @@ public:
             if(check)
             {
                 res.push_back(s.substr(st, j-st+1));
-                rec(s, j+1);
+                
+                if(dp[j+1] != 0)
+                    flag |= rec(s, j+1);
                 res.pop_back();
             }
         }
-        
-        return;
+        dp[st] = flag;
+        return flag;
     }
     vector<vector<string>> partition(string s) {
-        rec(s, 0);
+        memset(dp, -1, sizeof(dp));
+        bool c = rec(s, 0);
         return ans;
     }
 };
